@@ -47,6 +47,7 @@ class GoogleSheetsService {
   async addPaymentRecord(paymentData: PaymentSheetData): Promise<boolean> {
     try {
       console.log('Adding payment record to Google Sheets via Apps Script:', paymentData);
+      console.log('Apps Script URL:', APPS_SCRIPT_URL);
 
       // Check if Apps Script URL is configured
       if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
