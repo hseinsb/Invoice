@@ -191,20 +191,8 @@ const InvoiceDetail: React.FC = () => {
         updatedAt: new Date()
       });
 
-      // Add payment record to Google Sheets
-      try {
-        const sheetData = googleSheetsService.formatPaymentData(invoice, amount);
-        const sheetsSuccess = await googleSheetsService.addPaymentRecord(sheetData);
-        
-        if (sheetsSuccess) {
-          console.log('Payment record added to Google Sheets successfully');
-        } else {
-          console.warn('Failed to add payment record to Google Sheets');
-        }
-      } catch (sheetsError) {
-        console.error('Error adding to Google Sheets:', sheetsError);
-        // Don't fail the payment recording if sheets fails
-      }
+      // Google Sheets integration now handled automatically by Firebase sync
+      console.log('Payment recorded - will be synced to Google Sheets automatically');
 
       // Reset form and close modal
       setPaymentAmount('');

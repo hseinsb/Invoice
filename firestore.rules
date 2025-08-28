@@ -21,6 +21,8 @@ service cloud.firestore {
     match /invoices/{invoiceId} {
       // Allow authenticated users to read and write invoices
       allow read, write: if isAuthenticated();
+      // Allow public read access for Google Sheets sync (Apps Script)
+      allow read: if true;
     }
     
     // Users collection (optional, for user profiles/roles)
