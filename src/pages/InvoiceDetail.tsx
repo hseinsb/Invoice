@@ -8,7 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ConfirmDialog from '../components/ConfirmDialog';
 import toast from 'react-hot-toast';
 import { format } from 'date-fns';
-import googleSheetsService from '../services/googleSheets';
+// Google Sheets integration now handled automatically by Firebase sync
 
 const InvoiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
