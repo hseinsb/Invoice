@@ -134,10 +134,14 @@ const Invoices: React.FC = () => {
 
   const handleDeleteConfirm = async () => {
     try {
+      console.log('Attempting to delete invoice:', deleteDialog.invoiceId);
       await deleteDoc(doc(db, 'invoices', deleteDialog.invoiceId));
+      console.log('Invoice deleted from Firebase successfully');
       
       // Remove from local state
-      setInvoices(invoices.filter(inv => inv.id !== deleteDialog.invoiceId));
+      const updatedInvoices = invoices.filter(inv => inv.id !== deleteDialog.invoiceId);
+      setInvoices(updatedInvoices);
+      setFilteredInvoices(updatedInvoices);
       
       toast.success('Invoice deleted successfully');
       setDeleteDialog({ isOpen: false, invoiceId: '', invoiceNo: '' });

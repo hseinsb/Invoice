@@ -213,7 +213,9 @@ const InvoiceDetail: React.FC = () => {
     if (!invoice?.id) return;
 
     try {
+      console.log('Attempting to delete invoice from detail page:', invoice.id);
       await deleteDoc(doc(db, 'invoices', invoice.id));
+      console.log('Invoice deleted from Firebase successfully');
       
       // Remove from session storage if it exists
       sessionStorage.removeItem(`invoice_${invoice.id}`);
