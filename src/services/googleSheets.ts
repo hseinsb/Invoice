@@ -1,7 +1,6 @@
-// Serverless API endpoint for Google Sheets integration
-const API_ENDPOINT = process.env.NODE_ENV === 'production' 
-  ? 'https://invoice-git-main-hseinsbs-projects.vercel.app/api/add-payment'
-  : 'http://localhost:3000/api/add-payment'; // For local development
+// Google Apps Script Web App URL
+// You'll replace this with your actual Apps Script web app URL after deployment
+const APPS_SCRIPT_URL = process.env.VITE_APPS_SCRIPT_URL || 'YOUR_APPS_SCRIPT_URL_HERE';
 
 export interface PaymentSheetData {
   date: string; // Due date from invoice
@@ -20,23 +19,30 @@ class GoogleSheetsService {
 
   async addPaymentRecord(paymentData: PaymentSheetData): Promise<boolean> {
     try {
-      console.log('Adding payment record to Google Sheets via serverless API:', paymentData);
+      console.log('Adding payment record to Google Sheets via Apps Script:', paymentData);
 
-      const response = await fetch(API_ENDPOINT, {
+      // Check if Apps Script URL is configured
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+        console.error('❌ Apps Script URL not configured. Please set VITE_APPS_SCRIPT_URL environment variable.');
+        return false;
+      }
+
+      const response = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(paymentData)
+        body: JSON.stringify(paymentData),
+        mode: 'cors' // Apps Script supports CORS
       });
 
       if (response.ok) {
         const result = await response.json();
         console.log('✅ Payment record added to Google Sheets:', result);
-        return true;
+        return result.success !== false; // Apps Script returns success field
       } else {
-        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-        console.error('❌ Failed to add payment record:', response.statusText, errorData);
+        const errorText = await response.text().catch(() => 'Unknown error');
+        console.error('❌ Failed to add payment record:', response.statusText, errorText);
         return false;
       }
     } catch (error) {
