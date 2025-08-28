@@ -1,6 +1,3 @@
-// Vercel Serverless Function for Google Sheets Integration
-// This keeps your service account credentials secure on the server
-
 const { google } = require('googleapis');
 
 // Service account credentials from environment variables
@@ -22,7 +19,7 @@ const GOOGLE_CREDENTIALS = {
 const SPREADSHEET_ID = '1mcXXq3LmhL3MbDNkk_CDPXCXLNw_bRrsOwyNylG-Qik';
 const SHEET_NAME = 'Sheet1';
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -34,7 +31,18 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Only allow POST requests
+  // Handle GET requests (for testing)
+  if (req.method === 'GET') {
+    res.status(200).json({ 
+      message: 'Google Sheets API endpoint is running',
+      timestamp: new Date().toISOString(),
+      spreadsheetId: SPREADSHEET_ID,
+      sheetName: SHEET_NAME
+    });
+    return;
+  }
+
+  // Only allow POST requests for actual data
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method Not Allowed' });
     return;
@@ -103,4 +111,4 @@ export default async function handler(req, res) {
       details: error.message
     });
   }
-}
+};
