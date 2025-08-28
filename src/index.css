@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply h-full;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 font-sans antialiased;
+  }
+  
+  * {
+    @apply border-gray-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+  }
+  
+  .btn-primary {
+    @apply btn text-white bg-brand-600 hover:bg-brand-700 focus:ring-brand-500;
+  }
+  
+  .btn-secondary {
+    @apply btn text-brand-700 bg-brand-100 hover:bg-brand-200 focus:ring-brand-500;
+  }
+  
+  .btn-danger {
+    @apply btn text-white bg-red-600 hover:bg-red-700 focus:ring-red-500;
+  }
+  
+  .input {
+    @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm;
+  }
+  
+  .label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+  
+  .card {
+    @apply bg-white shadow rounded-lg;
+  }
+}
+
+/* Print styles for invoices */
+@media print {
+  /* Hide everything except the invoice content */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Show only the invoice container and its children */
+  .print-container,
+  .print-container * {
+    visibility: visible;
+  }
+  
+  /* Position the invoice at the top of the page */
+  .print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Page setup */
+  @page {
+    size: letter; /* 8.5" x 11" */
+    margin: 0.5in; /* Reasonable margins */
+  }
+  
+  /* Remove backgrounds and shadows for print */
+  .bg-white {
+    background: white !important;
+  }
+  
+  .shadow-lg,
+  .shadow-md {
+    box-shadow: none !important;
+  }
+  
+  /* Ensure text is black on white */
+  .text-gray-600,
+  .text-gray-700,
+  .text-gray-800,
+  .text-gray-900 {
+    color: black !important;
+  }
+  
+  /* Hide navigation and action buttons */
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Ensure tables don't break across pages */
+  table {
+    page-break-inside: avoid;
+  }
+  
+  /* Better table styling for print */
+  table th,
+  table td {
+    border: 1px solid #000 !important;
+    padding: 8px !important;
+  }
+  
+  /* Ensure proper spacing */
+  .space-y-4 > * + * {
+    margin-top: 16px !important;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 24px !important;
+  }
+  
+  /* Force page breaks where needed */
+  .page-break-before {
+    page-break-before: always;
+  }
+  
+  .page-break-after {
+    page-break-after: always;
+  }
+  
+  /* Avoid breaking inside elements */
+  .no-page-break {
+    page-break-inside: avoid;
+  }
+}
