@@ -1,6 +1,33 @@
-// Google Apps Script Web App URL
-// You'll replace this with your actual Apps Script web app URL after deployment
-const APPS_SCRIPT_URL = process.env.VITE_APPS_SCRIPT_URL || 'YOUR_APPS_SCRIPT_URL_HERE';
+// Google Apps Script Web App URL - constructed from environment variables
+function getAppsScriptUrl(): string {
+  // Option 1: Check for split URL parts
+  const base = process.env.VITE_APPS_SCRIPT_BASE;
+  const id = process.env.VITE_APPS_SCRIPT_ID;
+  
+  if (base && id) {
+    return `${base}${id}/exec`;
+  }
+  
+  // Option 2: Check for encoded URL
+  const encoded = process.env.VITE_APPS_SCRIPT_ENCODED;
+  if (encoded) {
+    try {
+      return atob(encoded);
+    } catch (e) {
+      console.error('Failed to decode Apps Script URL:', e);
+    }
+  }
+  
+  // Option 3: Fallback to direct URL (if Vercel allows it)
+  const directUrl = process.env.VITE_APPS_SCRIPT_URL;
+  if (directUrl && directUrl !== 'YOUR_APPS_SCRIPT_URL_HERE') {
+    return directUrl;
+  }
+  
+  return 'YOUR_APPS_SCRIPT_URL_HERE';
+}
+
+const APPS_SCRIPT_URL = getAppsScriptUrl();
 
 export interface PaymentSheetData {
   date: string; // Due date from invoice
