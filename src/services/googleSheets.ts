@@ -1,6 +1,6 @@
 // Serverless API endpoint for Google Sheets integration
 const API_ENDPOINT = process.env.NODE_ENV === 'production' 
-  ? 'https://invoice-six-liart.vercel.app/api/add-payment'
+  ? 'https://invoice-git-main-hseinsbs-projects.vercel.app/api/add-payment'
   : 'http://localhost:3000/api/add-payment'; // For local development
 
 export interface PaymentSheetData {
