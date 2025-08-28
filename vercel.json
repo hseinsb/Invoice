@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/add-payment.js": {
-      "runtime": "@vercel/node"
-    }
-  },
   "headers": [
     {
       "source": "/api/(.*)",
