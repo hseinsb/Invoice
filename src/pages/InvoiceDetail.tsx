@@ -389,8 +389,8 @@ const InvoiceDetail: React.FC = () => {
             </div>
             <div className="text-sm text-gray-600">
               <p><strong>Invoice:</strong> {invoice.invoiceNo || 'Draft'}</p>
-              <p><strong>Date:</strong> {invoice.date ? format(new Date(invoice.date), 'MMMM d, yyyy') : 'N/A'}</p>
-              <p><strong>Due:</strong> {invoice.dueDate ? format(new Date(invoice.dueDate), 'MMMM d, yyyy') : 'N/A'}</p>
+              <p><strong>Date:</strong> {invoice.date ? format(new Date(invoice.date + 'T00:00:00'), 'MMMM d, yyyy') : 'N/A'}</p>
+              <p><strong>Due:</strong> {invoice.dueDate ? format(new Date(invoice.dueDate + 'T00:00:00'), 'MMMM d, yyyy') : 'N/A'}</p>
             </div>
           </div>
         </div>
@@ -497,7 +497,7 @@ const InvoiceDetail: React.FC = () => {
                   {invoice.payments.map((payment, index) => (
                     <tr key={index}>
                       <td className="px-6 py-4 text-sm text-gray-900">
-                        {format(new Date(payment.date), 'MMM d, yyyy')}
+                        {format(new Date(payment.date + 'T00:00:00'), 'MMM d, yyyy')}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-500 capitalize">
                         {payment.method.replace('_', ' ')}
