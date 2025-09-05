@@ -17,10 +17,9 @@ const CreateInvoice: React.FC = () => {
   const [customerName, setCustomerName] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [dueDate, setDueDate] = useState(() => {
-    // Set due date to same day next month
+    // Set due date to today's date
     const today = new Date();
-    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
-    return nextMonth.toISOString().split('T')[0];
+    return today.toISOString().split('T')[0];
   });
   const [notes, setNotes] = useState('');
   
